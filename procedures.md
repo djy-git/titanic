@@ -60,9 +60,9 @@ dtypes: float64(2), int64(4), object(5)
 memory usage: 36.0+ KB
 ```
 
-- Imputing 필요 variables
-`Age` (20%):  <br>
-`Cabin` (92%): column 제거 <br>
+- **Imputing 필요 variables** <br>
+`Age` (20%): 타 변수들로부터 추정 <br>
+`Cabin` (92%): column 제거, 혹은 의미가 있는 값이라고 판단될 시 가족관계를 통해 추정 <br>
 `Embarked` (2개): row 제거 <br>
 `Fare` (1개): row 제거
 
@@ -72,5 +72,30 @@ memory usage: 36.0+ KB
 ```
 ![](images/1.png)
 - `Fare`, `Parch`, `SibSp`: log scale로 변경
-- `PassengerID`는 imputing 시에만 사용하고 예측할 땐 제거
+- `PassengerId`는 타 변수들과 무관하다고 판단되어(아래 scatter plot 참조) 제거
 - `Pclass`: dummy variables로 변경
+
+### 1.2.4. Plotting and correlation analysis
+```py
+> np.triu(np.ones_like(corr)) * train_data.corr()
+```
+![](images/3.jpg)
+
+```py
+> from pandas.plotting import scatter_matrix
+> scatter_matrix(train_data, figsize=(15, 15))
+```
+![](images/2.png)
+
+- `PassengerId` <br>
+타 변수들과 유의한 관계가 보이지 않는다.(최대 0.08) 제거하는 것이 바람직하다. <br>
+특히, 가족은 비슷한 `PassengerId`를 갖지 않는다. <br>
+![](images/4.jpg) <br>
+
+- `Survived` <br>
+`Pclass`가 작을수록(-0.36), `Fare`가 클수록(0.27) 생존하는 경향이 상대적으로 가장 크다.(`Pclass`가 약 1.3배 정도 더 높은 경향성을 가진다) <br>
+즉, 부유층일수록 생존할 확률이 높다는 경향성을 무시할 수 없다. <br>
+
+- `Plass` <br>
+`Age`가 작을수록(-0.37) `Pclass`가 증가하는 경향성을 보인다. <br>
+``
