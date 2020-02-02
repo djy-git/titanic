@@ -62,18 +62,21 @@ memory usage: 36.0+ KB
 
 - **Imputing 필요 variables** <br>
 `Age` (20%): row 제거 혹은 타 변수들로부터 추정 <br>
-`Cabin` (92%): column 제거 혹은 의미가 있는 값이라고 판단될 시 가족관계를 통해 추정 (가족은 동일한 선실을 사용) <br>
+`Cabin` (92%): 선실이 없는 승객일 수 있다. column 제거 혹은 의미가 있는 값이라고 판단될 시 가족관계를 통해 추정 (가족은 동일한 선실을 사용) <br>
 `Embarked` (2개): row 제거 <br>
 `Fare` (1개): row 제거
 
 ### 1.2.3. Numerical variables
+Nan값을 가진 row를 모두 제거한 712개의 train data(추정치 포함 X)에 대해 분석 <br>
+
 ```py
 > train_data.hist(bins=50, figsize=(20, 15));
 ```
 ![](images/1.png)
-- `Fare`, `Parch`, `SibSp`: log scale로 변경
+- `Fare`: log scale로 변경
 - `PassengerId`는 타 변수들과 무관하다고 판단되어(아래 scatter plot 참조) 제거
 - `Pclass`: dummy variables로 변경
+- `SibSp`, `Parch`: 두 값을 합쳐서 `Household`로 만들 수 있다.
 
 #### 1.2.3.1. Plotting and correlation analysis
 ```py
@@ -122,3 +125,30 @@ memory usage: 36.0+ KB
 `Fare`가 커질수록(0.21) `Parch`도 증가하는 약한 경향성을 보인다. <br>
 
 - `Fare` <br>
+Exponentially decaying하기 때문에 log를 취해 좀 더 고른 분포로 만들면 더 강한 상관관계를 얻을 수 있다. <br>
+
+### 1.2.3.2. Preprocessing
+- **Feature Engineering** <br>
+1. Remove `Nan` values
+1. `log(Fare)` = ln(1 + `Fare`) <br>
+2. Split `Pclass` into `1st class`, `2nd class`, `3rd class` <br>
+3. `Household` = `SibSp` + `Parch` <br>
+3. Manual correction (`log(Fare)` == 0)
+5. Split `Age` with cutpoint 11 <br>
+4. Standardization
+
+- **Imputing** <br>
+`Age`와 `Cabin`에 대한 imputing은 modeling의 feedback을 받으며 진행한다. <br>
+
+- **Correlation Results**
+Age (Total) <br>
+![](images/5.jpg) <br>
+![](images/3.png) <br>
+<br>
+Age (≤ 11) <br>
+![](images/6.jpg) <br>
+![](images/4.png) <br>
+<br>
+Age (＞11) <br>
+![](images/7.jpg) <br>
+![](images/5.png) <br>
