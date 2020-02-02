@@ -1,4 +1,4 @@
-# 1. Dataset
+# 1. Data & Preprocessing
 [Titanic](https://www.kaggle.com/c/titanic/data)
 
 ## 1.1. Features
@@ -61,8 +61,8 @@ memory usage: 36.0+ KB
 ```
 
 - **Imputing 필요 variables** <br>
-`Age` (20%): 타 변수들로부터 추정 <br>
-`Cabin` (92%): column 제거, 혹은 의미가 있는 값이라고 판단될 시 가족관계를 통해 추정 <br>
+`Age` (20%): row 제거 혹은 타 변수들로부터 추정 <br>
+`Cabin` (92%): column 제거 혹은 의미가 있는 값이라고 판단될 시 가족관계를 통해 추정 (가족은 동일한 선실을 사용) <br>
 `Embarked` (2개): row 제거 <br>
 `Fare` (1개): row 제거
 
@@ -75,7 +75,7 @@ memory usage: 36.0+ KB
 - `PassengerId`는 타 변수들과 무관하다고 판단되어(아래 scatter plot 참조) 제거
 - `Pclass`: dummy variables로 변경
 
-### 1.2.4. Plotting and correlation analysis
+#### 1.2.3.1. Plotting and correlation analysis
 ```py
 > np.triu(np.ones_like(corr)) * train_data.corr()
 ```
@@ -89,13 +89,36 @@ memory usage: 36.0+ KB
 
 - `PassengerId` <br>
 타 변수들과 유의한 관계가 보이지 않는다.(최대 0.08) 제거하는 것이 바람직하다. <br>
-특히, 가족은 비슷한 `PassengerId`를 갖지 않는다. <br>
+특히, 가족은 비슷한 `PassengerId`를 갖지 않는데 후에 `Name`으로 정렬을 통해 의미있는 feature를 추가할 수 있을 것이다.
+<details>
+<summary> 가족은 동일한 성(Name)과 SibSp, Parch, Ticket, Fare, Cabin, Embarked를 가지고, 동일한 Survived값을 가지는 경향이 있다. </summary>
+<div markdown="1">
+
+*Goodwin* Family → `Survived`: 0 <br>
 ![](images/4.jpg) <br>
+
+</div>
+</details>
 
 - `Survived` <br>
 `Pclass`가 작을수록(-0.36), `Fare`가 클수록(0.27) 생존하는 경향이 상대적으로 가장 크다.(`Pclass`가 약 1.3배 정도 더 높은 경향성을 가진다) <br>
 즉, 부유층일수록 생존할 확률이 높다는 경향성을 무시할 수 없다. <br>
 
-- `Plass` <br>
+- `Pclass` <br>
 `Age`가 작을수록(-0.37) `Pclass`가 증가하는 경향성을 보인다. <br>
-``
+또한, `Fare`와 강한 음의 상관관계(-0.55)를 보인다. <br>
+기본적으론 numerical value로 되어 있지만, categorical value로 변환하는 것이 바람직하다. <br>
+
+- `Age` <br>
+`SibSp`가 작아질수록(-0.31) `Age`가 증가하는 경향성을 보인다. <br>
+마찬가지로, `Parch`도 작아질수록(-0.19) `Age`가 증가하는 경향을 보인다. <br>
+히스토그램을 살펴보면 11세 정도를 cutpoint로 하는 방법도 고려해볼만하다. <br>
+
+- `SibSp` <br>
+`Parch`가 커질수록(0.38) `SibSp`도 증가하는 경향성을 보인다. <br>
+`Fare`도 약한 양의 상관관계(0.14)를 가진다. <br>
+
+- `Parch` <br>
+`Fare`가 커질수록(0.21) `Parch`도 증가하는 약한 경향성을 보인다. <br>
+
+- `Fare` <br>
