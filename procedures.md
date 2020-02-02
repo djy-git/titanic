@@ -1,8 +1,7 @@
 # 1. Dataset
 [Titanic](https://www.kaggle.com/c/titanic/data)
 
-## 1) Features
-
+## 1.1. Features
 | Variable	| Definition |	Key |
 | :---: | :---: | :---: |
 | survival	|Survival	|0 = No, 1 = Yes|
@@ -16,4 +15,4 @@
 |cabin|	Cabin number	||
 |embarked|	Port of Embarkation	C = Cherbourg, Q = Queenstown, S = Southampton||
 
-# 2)
+## 1.2. Exploration
