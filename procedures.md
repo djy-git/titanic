@@ -62,7 +62,7 @@ memory usage: 36.0+ KB
 
 - **Imputing 필요 variables** <br>
 `Age` (20%): row 제거 혹은 타 변수들로부터 추정 <br>
-`Cabin` (92%): 선실이 없는 승객일 수 있다. column 제거 혹은 의미가 있는 값이라고 판단될 시 가족관계를 통해 추정 (가족은 동일한 선실을 사용) <br>
+`Cabin` (92%): 1st class를 제외하고는 선실을 가지지 않는다. column 제거 혹은 의미가 있는 값이라고 판단될 시 가족관계를 통해 추정 (가족은 동일한 선실을 사용) <br>
 `Embarked` (2개): row 제거 <br>
 `Fare` (1개): row 제거
 
@@ -152,3 +152,9 @@ Age (≤ 11) <br>
 Age (＞11) <br>
 ![](images/7.jpg) <br>
 ![](images/5.png) <br>
+
+### 1.2.4. Categorical variables
+- `Sex`: `Male`, `Female`로 분리 <br>
+- `Name`: `Last name`, `Title`, `First name`으로 분리 후, `Title`을 `Mr`, `Mrs`, `Miss`로 모은 다음, `Title`을 제외한 나머지 변수들 제거 <br>
+- `Cabin`: 첫글자 알파벳만 `Deck`으로 사용하고, nan값은 'Unknown'으로 처리 <br>
+- `Ticket`, `Embarked`: 제거 <br>
