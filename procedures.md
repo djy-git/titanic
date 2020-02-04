@@ -142,14 +142,19 @@ Exponentially decaying하기 때문에 log를 취해 좀 더 고른 분포로 �
 
 - **Correlation Results**
 Age (Total) <br>
+
 ![](images/5.jpg) <br>
 ![](images/3.png) <br>
+
 <br>
 Age (≤ 11) <br>
+
 ![](images/6.jpg) <br>
 ![](images/4.png) <br>
+
 <br>
 Age (＞11) <br>
+
 ![](images/7.jpg) <br>
 ![](images/5.png) <br>
 
