@@ -1,5 +1,5 @@
 from env import *
-from preprocessing import feature_engineering as fe
+import preprocessing.feature_engineering as fe
 
 
 if __name__ == "__main__":
@@ -44,11 +44,9 @@ if __name__ == "__main__":
     # Columns
     # [Age  SibSp  Parch  log(Fare)  1st class  2nd class  3rd class  Female  Male  Miss  Mr  Mrs  B  C  D  E  Unknown]
 
-    print(train_data_proc)
-
     train_data_proc.to_csv(TRAIN_PROC_CSV_PATH, index=False)
     test_data_proc.to_csv(TEST_PROC_CSV_PATH, index=False)
 
-    print("Preprocessed csv files are saved in")
+    print("[Preprocessing] Preprocessed csv files are saved in")
     print(TRAIN_PROC_CSV_PATH)
     print(TEST_PROC_CSV_PATH)
