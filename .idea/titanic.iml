@@ -5,7 +5,4 @@
     <orderEntry type="jdk" jdkName="Remote Python 3.7.6 (sftp://ydj@165.246.45.200:22/home/ydj/anaconda3/envs/kaggle/bin/python)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
-  <component name="TestRunnerService">
-    <option name="PROJECT_TEST_RUNNER" value="pytest" />
-  </component>
 </module>
