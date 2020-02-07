@@ -127,18 +127,6 @@ Nan값을 가진 row를 모두 제거한 712개의 train data(추정치 포함 X
 - `Fare` <br>
 Exponentially decaying하기 때문에 log를 취해 좀 더 고른 분포로 만들면 더 강한 상관관계를 얻을 수 있다. <br>
 
-### 1.2.3.2. Preprocessing
-- **Feature Engineering** <br>
-1. Remove `Nan` values
-1. `log(Fare)` = ln(1 + `Fare`) <br>
-2. Split `Pclass` into `1st class`, `2nd class`, `3rd class` <br>
-3. `Household` = `SibSp` + `Parch` <br>
-3. Manual correction (`log(Fare)` == 0)
-5. Split `Age` with cutpoint 11 <br>
-4. Standardization
-
-- **Imputing** <br>
-`Age`와 `Cabin`에 대한 imputing은 modeling의 feedback을 받으며 진행한다. <br>
 
 - **Correlation Results**
 Age (Total) <br>
@@ -158,8 +146,37 @@ Age (＞11) <br>
 ![](images/7.jpg) <br>
 ![](images/5.png) <br>
 
-### 1.2.4. Categorical variables
-- `Sex`: `Male`, `Female`로 분리 <br>
-- `Name`: `Last name`, `Title`, `First name`으로 분리 후, `Title`을 `Mr`, `Mrs`, `Miss`로 모은 다음, `Title`을 제외한 나머지 변수들 제거 <br>
-- `Cabin`: 첫글자 알파벳만 `Deck`으로 사용하고, nan값은 'Unknown'으로 처리 <br>
-- `Ticket`, `Embarked`: 제거 <br>
+
+## 1.3. Preprocessing
+### 1.3.1. Numerical variables
+- **Feature Engineering** <br>
+1. Remove `Nan` values
+1. `log(Fare)` = ln(1 + `Fare`) (remove `Fare`) <br>
+2. Split `Pclass` into `1st class`, `2nd class`, `3rd class` <br>
+3. `Household` = `SibSp` + `Parch` <br>
+3. Manual correction (`log(Fare)` == 0)
+5. Split `Age` with cutpoint 11 (**Hard**) <br>
+4. Standardization
+
+- **Processed features** <br>
+1. `Age` <br>
+2. `SibSp` <br>
+3. `Parch` <br>
+4. `log(Fare)` <br>
+5. `Household` <br>
+6. `1st class` <br>
+7. `3rd class` <br>
+8. `Male` <br>
+
+
+- **Imputing** <br>
+`Age`와 `Cabin`에 대한 imputing은 modeling의 feedback을 받으며 진행한다. <br>
+
+### 1.3.2. Categorical variables
+- **Feature Engineering** <br>
+1. `Sex`: `Male`, `Female`로 분리 <br>
+2. `Name`: `Last name`, `Title`, `First name`으로 분리 후, `Title`을 `Mr`, `Mrs`, `Miss`로 모은 다음, `Title`을 제외한 나머지 변수들 제거 <br>
+3. `Cabin`: 첫글자 알파벳만 `Deck`으로 사용하고, nan값은 'Unknown'으로 처리 <br>
+4. `Ticket`, `Embarked`: 제거 <br>
+
+- **Imputing** <br>
