@@ -1,5 +1,6 @@
 from env import *
 import preprocessing.feature_engineering as fe
+import preprocessing.naive_feature_engineering as nfe
 
 
 if __name__ == "__main__":
@@ -18,35 +19,21 @@ if __name__ == "__main__":
     train_data.dropna(subset=['Fare', 'Embarked', 'Age'], inplace=True)
     train_data.reset_index(drop=True, inplace=True)
 
-    '''
-    > train_data
-    RangeIndex: 712 entries, 0 to 711
-    Data columns (total 10 columns):
-    Survived    712 non-null int64
-    Pclass      712 non-null int64
-    Name        712 non-null object
-    Sex         712 non-null object
-    Age         712 non-null float64
-    SibSp       712 non-null int64
-    Parch       712 non-null int64
-    Ticket      712 non-null object
-    Fare        712 non-null float64
-    Embarked    712 non-null object
-    dtypes: float64(2), int64(4), object(4)
-    '''
-
     ### Feature engineering
-    # Split with 'Age' value 11
-    # X_train1, X_train2 = X_train[X_train['Age'] <= 11], X_train[X_train['Age'] > 11]
-    # X_train1.reset_index(drop=True, inplace=True);  X_train2.reset_index(drop=True, inplace=True)
+    # Naive preprocess & Full process
+    for preprocess, train_csv_path, test_csv_path in zip([nfe.preprocess, fe.preprocess],
+                                                         [TRAIN_NAIVE_PROC_CSV_PATH, TRAIN_PROC_CSV_PATH],
+                                                         [TEST_NAIVE_PROC_CSV_PATH, TEST_PROC_CSV_PATH]):
+        train_data_proc = preprocess(train_data, train=True)
+        test_data_proc = preprocess(test_data, train=False)
 
-    train_data_proc, test_data_proc = fe.preprocess(train_data, train=True), fe.preprocess(test_data, train=False)
-    # Columns
-    # [Age  SibSp  Parch  log(Fare)  1st class  2nd class  3rd class  Female  Male  Miss  Mr  Mrs  B  C  D  E  Unknown]
+        #TODO
+        # Split with 'Age' value 11
+        # X_train1, X_train2 = X_train[X_train['Age'] <= 11], X_train[X_train['Age'] > 11]
+        # X_train1.reset_index(drop=True, inplace=True);  X_train2.reset_index(drop=True, inplace=True)
+        train_data_proc.to_csv(train_csv_path, index=False)
+        test_data_proc.to_csv(test_csv_path, index=False)
 
-    train_data_proc.to_csv(TRAIN_PROC_CSV_PATH, index=False)
-    test_data_proc.to_csv(TEST_PROC_CSV_PATH, index=False)
-
-    print("[Preprocessing] Preprocessed csv files are saved in")
-    print(TRAIN_PROC_CSV_PATH)
-    print(TEST_PROC_CSV_PATH)
+        print("[Preprocessing] csv files are saved in")
+        print(train_csv_path)
+        print(test_csv_path, end='\n\n')

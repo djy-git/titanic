@@ -11,4 +11,10 @@ pd.set_option('display.precision', 3)
 
 ROOT_PATH = "/workspace/ydj/kaggle/kernel/titanic/data/"
 TRAIN_CSV_PATH, TEST_CSV_PATH = ROOT_PATH + "original/train.csv", ROOT_PATH + "original/test.csv"
-TRAIN_PROC_CSV_PATH, TEST_PROC_CSV_PATH = ROOT_PATH + "processed/train.csv", ROOT_PATH + "processed/test.csv"
+TRAIN_NAIVE_PROC_CSV_PATH, TEST_NAIVE_PROC_CSV_PATH = ROOT_PATH + "naive_process/train.csv", ROOT_PATH + "naive_process/test.csv"
+TRAIN_PROC_CSV_PATH, TEST_PROC_CSV_PATH = ROOT_PATH + "process/train.csv", ROOT_PATH + "process/test.csv"
+
+
+def split_target(Xy, target='Survived'):
+     y, X = Xy[target], Xy.drop(columns=target)
+     return X, y
