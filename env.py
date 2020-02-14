@@ -3,6 +3,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import re
 
+from sklearn.svm import SVC
+from sklearn.ensemble import RandomForestClassifier
+
 np.set_printoptions(precision=2, edgeitems=20, linewidth=1000)
 pd.set_option('display.max_columns', 100)
 pd.set_option('display.width', 1000)
